@@ -1,0 +1,66 @@
+/* client/src/components/AddDebtForm.module.css */
+
+/* Форма контейнери */
+.formContainer {
+    position: relative;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    z-index: 10000;
+  }
+  
+  /* Инпутлар учун стил */
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Селект элементи учун стил */
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Текст айланма учун стил */
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical; /* Фақат вертикал ўзгаришга рухсат беради */
+  }
+  
+  /* Сақлаш тугмаси учун стил */
+  .submitButton {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submitButton:hover {
+    background-color: #218838;
+  }
+  
+  /* Хабар учун стил */
+  .successMessage {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }

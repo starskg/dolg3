@@ -1,0 +1,47 @@
+/* client/src/App.css */
+
+/* Филтр тугмалари */
+button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Карз элементлари */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Хабар учун стил */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 8px;
+  border: 1px solid green;
+  border-radius: 4px;
+  background-color: #e6f7ee;
+}
+
