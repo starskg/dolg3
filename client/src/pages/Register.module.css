@@ -1,0 +1,168 @@
+/* Барча элементлар учун reset */
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #080710;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Контейнер */
+.glassmorphism-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Фон шакллари */
+.background {
+  width: 430px;
+  height: 520px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.background .shape {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.shape:first-child {
+  background: linear-gradient(#1845ad, #23a2f6);
+  left: -80px;
+  top: -80px;
+}
+
+.shape:last-child {
+  background: linear-gradient(to right, #ff512f, #f09819);
+  right: -140px;
+  bottom: -80px;
+}
+
+/* Валюта курслари блоги (ExchangeRates) */
+.exchange-rates-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  /* Ихтиёрий тарзда ўлчам/фон берилса бўлади */
+  color: #fff;
+  z-index: 10; /* Формадан олдин чиқиши учун */
+}
+
+/* Формамиз */
+form {
+  height: 650px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+form h3 {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.login-page input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #fff;
+}
+
+::placeholder {
+  color: #e5e5e5;
+}
+
+button {
+  margin-top: 40px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Социал логин */
+.social {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.social div {
+  width: 48%;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.27);
+  color: #eaf0fb;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social div:hover {
+  background-color: rgba(255, 255, 255, 0.47);
+}
+
+/* Рўйхатдан ўтиш ҳаволаси */
+.signup-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.signup-link a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.signup-link a:hover {
+  text-decoration: none;
+}
+.from {
+    text-align: left;
+    margin-top: 10px;
+    padding: auto;
+  }

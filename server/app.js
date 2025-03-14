@@ -6,7 +6,9 @@ const passport = require('./config/passport');
 const authRoutes = require('./routes/authRoutes');
 const debtRoutes = require('./routes/debtRoutes');
 const cors = require('cors'); // Импорт cors
-//const debtorRoutes = require('./routes/debtorRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
+
 
 const app = express();
 
@@ -37,6 +39,7 @@ app.use(passport.session()); // Активировать сессию Passport
 app.use('/auth', authRoutes);
 app.use('/api/debts', debtRoutes);
 app.use('/debts', debtRoutes);
+app.use('/api/admin', adminRoutes);
 
 //app.use('/api/debtors', debtorRoutes);
 
@@ -48,6 +51,8 @@ app.get('/api/user', (req, res) => {
     }
     res.json(req.user);
 });
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 

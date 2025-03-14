@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Card, Button, Form, InputGroup, Container, Row, Col, Pagination } from "react-bootstrap";
 import AddDebtForm from "../components/AddDebtForm";
 import DebtList from "../components/DebtList";
-import PlusButton from "../components/PlusButton";
+//import PlusButton from "../components/PlusButton";
+import TopLink from "../components/TopLink";
+import WelcMenu from "../components/WelcMenu";
+import { Helmet } from 'react-helmet';
+
+
 
 
 const Dashboard = () => {
@@ -101,65 +106,70 @@ const Dashboard = () => {
     (sum, debt) => (debt.type === "taken" ? sum - parseFloat(debt.amount) : sum + parseFloat(debt.amount)),
     0
   );
+  // 1. Mening olgan qarzlarim (Я должен)
+  const myDebtsAmount = debts
+    .filter((debt) => debt.type === "taken")
+    .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
+
+  // 2. Mening bergan qarzlarim (Я дал)
+  const givenDebtsAmount = debts
+    .filter((debt) => debt.type === "given")
+    .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
 
   const handleCloseForm = () => {
     setEditingDebt(null);
     setSelectedType(null);
     setCurrentPage(1);
   };
+  const handleAddDebt = async (formData) => {
+    try {
+      const userResponse = await axios.get("http://localhost:5000/api/user", { withCredentials: true });
+      const userId = userResponse.data.id;
+      await axios.post(
+        "http://localhost:5000/api/debts",
+        { ...formData, user_id: userId },
+        { withCredentials: true }
+      );
+      fetchDebts(); // Yangi ma'lumotlarni olish
+    } catch (error) {
+      console.error("Ошибка при добавлении нового долга:", error);
+    }
+  };
 
   const totalPages = Math.ceil(filteredDebts.length / itemsPerPage);
   return (
+    <div>
+    <Helmet>
+      <title>Дашборд</title>
+    </Helmet>
 
-    <Container className="mt-4">
-      {/* ✅ ФОЙДАЛАНУВЧИ САЛОМЛАШИШ */}
-      <div className="container my-4">
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-start">
-            <h3 className="card-title fw-bold text-uppercase">
-              {user ? `Привет, ${user.name}!` : "Загрузка..."}
-            </h3>
-            <p className="text-muted mb-0">Добро пожаловать в систему учёта долгов</p>
-          </div>
-        </div>
+    <Container  className="mt-4">
+      <TopLink /> {/* Bu yerda tepada header bar ko'rsatiladi */}
+
+      <div>
+        <WelcMenu
+          user={user}
+          totalAmount={totalAmount}
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+          setSelectedType={setSelectedType}
+          myDebtsAmount={myDebtsAmount}       // type === "taken"
+          givenDebtsAmount={givenDebtsAmount} // type === "given"
+        />
+        {/* Qolgan dashboard qismi */}
+        {(selectedType || editingDebt) && (
+          <AddDebtForm
+            onCancel={handleCloseForm}
+            onUpdate={handleUpdateDebt}
+            onAdd={handleAddDebt}
+            defaultType={selectedType}
+            editingDebt={editingDebt}
+          />
+        )}
+
       </div>
 
-
-
-
-      <Container className="mt-4 position-relative">
-  {/* ✅ УМУМИЙ СУММА ва "+" ТУГМАСИ */}
-  <div className="d-flex align-items-center justify-content-between mt-3 p-3 border rounded shadow-sm">
-    <div>
-      <span className="fs-4 fw-bold me-3">Общий сумма:</span>
-      <span className={`fs-2 fw-bold ${totalAmount >= 0 ? 'text-success' : 'text-danger'}`}>
-        {totalAmount.toLocaleString()} <span className="fs-4">сом</span>
-      </span>
-    </div>
-    
-    <PlusButton
-      setShowMenu={setShowMenu}
-      showMenu={showMenu}
-      setSelectedType={setSelectedType}
-    />
-  </div>
-
-  {/* Agar forma kerak bo'lsa, u quyidagicha render bo'ladi: */}
-  {(selectedType || editingDebt) && (
-    <AddDebtForm
-      onCancel={handleCloseForm}
-      onUpdate={handleUpdateDebt}
-      fetchDebts={fetchDebts}
-      defaultType={selectedType}
-      editingDebt={editingDebt}
-    />
-  )}
-</Container>
-
-
-
-
-      {/* ✅ ФИЛЬТР ВА ҚИДИРУВ */}
+      {/* Filter va Qidiruv */}
       <Row className="mt-4">
         <Col md={6}>
           <div className="btn-group w-100">
@@ -187,7 +197,7 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      {/* ✅ ҚАРЗЛАР РЎЙХАТИ */}
+      {/* Qarzdorlar ro'yhati */}
       <Row className="mt-3">
         <Col>
           {debts.length === 0 ? (
@@ -199,37 +209,25 @@ const Dashboard = () => {
               onEdit={handleEditDebt}
               onUpdate={handleUpdateDebt}
               onRowClick={handleRowClick}
-              showDeleteIcon={true} // ✅ Ҳар бир қарз каторида "Х" тугмасини кўрсатиш
+              showDeleteIcon={true}
             />
           )}
         </Col>
       </Row>
 
-
-      {/* ✅ САҲИФАЛАШ (Pagination) */}
+      {/* Pagination */}
       <Pagination className="justify-content-center mt-3">
-        <Pagination.Prev
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        />
-
+        <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <Pagination.Item
-            key={page}
-            active={page === currentPage}
-            onClick={() => setCurrentPage(page)}
-          >
+          <Pagination.Item key={page} active={page === currentPage} onClick={() => setCurrentPage(page)}>
             {page}
           </Pagination.Item>
         ))}
-
-        <Pagination.Next
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={currentPage === totalPages || totalPages === 0}
-        />
+        <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages || totalPages === 0} />
       </Pagination>
-     
+
     </Container>
+    </div>
   );
 };
 

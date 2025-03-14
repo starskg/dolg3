@@ -1,0 +1,139 @@
+/* WelcMenu.css */
+
+/* Asosiy konteyner: butun kenglik, gorizontal skroll */
+.welcMenu-wrapper {
+    width: 100%;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /*overflow-x: auto;      /* Gorizontal skroll */
+    /*white-space: nowrap;   /* Elementlar bir qatorda */
+    padding: 1px;
+    box-sizing: border-box;
+    margin: 10px auto;
+  }
+  
+  /* Qator: elementlarni yonma-yon joylashishi */
+  .welcMenu-row {
+    display: inline-flex;  /* Bitta qatorda joylashish */
+    flex-wrap: wrap;      /* Qator bo‘ylab qatlamlanmasin */
+    gap: 1px;
+    align-items: center;
+  }
+  
+  /* Har bir blok (greeting, info, sum, plus button) */
+  .block {
+    background-color: #ffffff;
+    border-radius: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    padding: 1px;
+    min-width: 210px;
+    flex-shrink: 0;
+  }
+  
+  
+  /* Salomlashish bo'limi */
+  .greeting-container h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #343a40;
+  }
+  .greeting-container p {
+    margin: 0px 10px 0; /* 1px yuqoridan, 10px chap va o'ng, 0px pastdan */
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  
+  /* Info bo'limlari */
+  .info-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+  .info-value {
+    font-size: 1.4rem;
+    color: #28a745;
+    font-weight: 700;
+  }
+  .info-value2 {
+    font-size: 1.4rem;
+    color: #df364d;
+    font-weight: 700;
+  }
+  .currency {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-left: 5px;
+    color: #6c757d;
+  }
+  
+  /* Umumiy summa bo'limi */
+  .sum-label {
+    font-size: 0.9rem;
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1px;
+    display: block;
+  }
+  .sum-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
+  /* Mobil qurilmalar uchun: Elementlarni oddiy vertical (qator) shaklida joylashtiramiz */
+  @media (max-width: 900px) {
+    .welcMenu-wrapper {
+      overflow-x: hidden; /* Горизонтал скролл йўқ */
+      white-space: normal; /* Блоклар экранга мос тушиши учун */
+      padding: 1px;
+      margin: 5px auto;
+    }
+  
+    .welcMenu-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px; /* Ортиқча бўш жой қолмаслиги учун */
+      justify-content: space-between;
+    }
+  
+    .block {
+      flex: 1 1 45%; /* 2 та блок ёнида жойлашади */
+      min-width: 120px;
+      padding: 1px;
+      text-align: center;
+      font-size: 0.75rem;
+      margin: 2px 0;
+    }
+  
+    .greeting-container h3 {
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+  
+    .greeting-container p {
+      font-size: 0.7rem;
+      margin: 1px 1px 0;
+    }
+  
+    .info-label,
+    .sum-label {
+      font-size: 0.7rem; /* Жуда кам жой эгаллашини таъминлайди */
+    }
+  
+    .info-value,
+    .sum-value {
+      font-size: 0.9rem;
+    }
+  
+    .currency {
+      font-size: 0.7rem;
+    }
+  }
+  
+  
+  
+  

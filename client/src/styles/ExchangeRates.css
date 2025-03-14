@@ -1,0 +1,53 @@
+.exchange-rates-card {
+    /* Глассморфизм фони */
+    background-color: rgba(255, 255, 255, 0.13) !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  
+    /* Тугмалар ёки матнлар рангларини контраст қилиш учун */
+    color: #ffffff !important;
+  
+    /* Чеккалари */
+    border-radius: 10px !important;
+    padding: 20px;
+  
+    /* Ихтиёрий ўлчамлар */
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto; /* марказлаш */
+  }
+  
+  .exchange-rates-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 22px;
+    color: #000000 !important;
+  }
+  
+  .exchange-rates-table {
+    color: #fff;
+  }
+  
+  /* Титул сатр (thead) */
+  .exchange-rates-table thead {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Жадвал ичидаги сатрлар */
+  .exchange-rates-table tbody tr {
+    background-color: rgba(255, 255, 255, 0.07);
+  }
+  
+  /* Бордерлар рангини бирхиллаштириш */
+  .exchange-rates-table td,
+  .exchange-rates-table th {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  /* Агар striped стилни бошқача рангда хоҳласангиз, қуйидагилардан фойдаланинг */
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  

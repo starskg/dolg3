@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./AddDebtForm.module.css";
 import { AuthContext } from "../contexts/AuthContext";
 
-// 1. Helper funksiyalar
+// Helper funksiyalar
 const formatDateForInput = (date) => {
   const d = new Date(date);
   const year = d.getFullYear();
@@ -16,11 +15,11 @@ const formatDateForInput = (date) => {
 
 const getCurrentDateTime = () => formatDateForInput(new Date());
 
-const AddDebtForm = ({ onAdd, onUpdate, defaultType, editingDebt, fetchDebts, onCancel }) => {
-  // AuthContext dan isAuthenticated ni olish (hook har doim funksiya boshida chaqiriladi)
+const THRESHOLD = 1000000; // Masalan, 1,000,000 somdan katta bo'lsa
+
+const AddDebtForm = ({ onAdd, onUpdate, defaultType, editingDebt, onCancel }) => {
   const { isAuthenticated } = useContext(AuthContext);
 
-  // 2. State hooklarini chaqirish (har doim, shartdan oldin)
   const [formData, setFormData] = useState({
     debtor_name: editingDebt ? editingDebt.debtor_name : "",
     amount: editingDebt ? editingDebt.amount : "",
@@ -30,7 +29,6 @@ const AddDebtForm = ({ onAdd, onUpdate, defaultType, editingDebt, fetchDebts, on
   });
   const [successMessage, setSuccessMessage] = useState("");
 
-  // 3. useEffect hooki
   useEffect(() => {
     if (editingDebt) {
       setFormData({
@@ -51,44 +49,32 @@ const AddDebtForm = ({ onAdd, onUpdate, defaultType, editingDebt, fetchDebts, on
     }
   }, [editingDebt, defaultType]);
 
-  // 4. Event handlerlar
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const THRESHOLD = 1000000; // Masalan, 1,000,000 somdan katta bo'lsa
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (parseFloat(formData.amount) > THRESHOLD) {
-    alert("Киритилган сумма жуда катта. Илтимос, суммани текшириб кўринг.");
-    return; // Formani yuborishni to'xtatamiz
-  }
-
-  try {
-    if (editingDebt) {
-      await onUpdate({ ...formData, id: editingDebt.id });
-    } else {
-      const userResponse = await axios.get("http://localhost:5000/api/user", { withCredentials: true });
-      const userId = userResponse.data.id;
-      await axios.post(
-        "http://localhost:5000/api/debts",
-        { ...formData, user_id: userId },
-        { withCredentials: true }
-      );
-      setSuccessMessage("Долг успешно добавлен!");
-      setTimeout(() => setSuccessMessage(""), 3000);
+    if (parseFloat(formData.amount) > THRESHOLD) {
+      alert("Киритилган сумма жуда катта. Илтимос, суммани текшириб кўринг.");
+      return;
     }
-    fetchDebts();
-    onCancel(); // Forma yopilsin
-  } catch (error) {
-    console.error("❌ ERROR PROCESSING DEBT:", error);
-  }
-};
 
-  
+    try {
+      if (editingDebt) {
+        await onUpdate({ ...formData, id: editingDebt.id });
+      } else {
+        await onAdd(formData);
+        setSuccessMessage("Долг успешно добавлен!");
+        setTimeout(() => setSuccessMessage(""), 3000);
+      }
+      onCancel(); // Forma yopilsin
+    } catch (error) {
+      console.error("❌ ERROR PROCESSING DEBT:", error);
+    }
+  };
 
   const handleCancel = () => {
     setFormData({
@@ -98,17 +84,13 @@ const handleSubmit = async (e) => {
       comment: "",
       date: getCurrentDateTime(),
     });
-    fetchDebts();
-    
     onCancel();
   };
 
-  // 5. Endi shartli render: agar foydalanuvchi autentifikatsiya qilinmagan bo'lsa, xabar qaytarish
   if (!isAuthenticated) {
     return <p>Пожалуйста, войдите в систему для добавления долга.</p>;
   }
 
-  // 6. Forma render qilinishi
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
       <h3>{formData.type === "given" ? "Дать в долг" : "Взять в долг"}</h3>
@@ -143,7 +125,12 @@ const handleSubmit = async (e) => {
       </div>
       <div>
         <label>Комментарий:</label>
-        <textarea name="comment" value={formData.comment} onChange={handleChange} className={styles.inputField} />
+        <textarea
+          name="comment"
+          value={formData.comment}
+          onChange={handleChange}
+          className={styles.inputField}
+        />
       </div>
       <div>
         <label>Дата:</label>

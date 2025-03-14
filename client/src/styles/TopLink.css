@@ -1,0 +1,48 @@
+/* TopLinks контейнерини марказлаштириш */
+.top-links-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Тугмаларни горизонтал жойлаштириш */
+.top-links {
+  display: flex;
+  gap: 15px;
+}
+
+/* Ҳар бир меню элементи */
+.top-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover эффекти: ранг ўзгаради, орқа фон майин */
+.top-link:hover {
+  background: #f4f4f4;
+  color: #007bff;
+}
+
+/* Мобил мослашув: қаторга тушади */
+@media (max-width: 600px) {
+  .top-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .top-link {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+}
