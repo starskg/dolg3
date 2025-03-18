@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Card, Spinner, Table } from "react-bootstrap";
 import axios from "axios";
+import "../styles/ExchangeRates.css"; // Глассморфизм стили шу ерда
 
 const ExchangeRates = () => {
   const [rates, setRates] = useState(null);
@@ -30,35 +32,57 @@ const ExchangeRates = () => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-lg">
-      <h2 className="text-xl font-semibold text-center mb-4">Курс валюта</h2>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border border-gray-300 px-4 py-2">Валюта</th>
-              <th className="border border-gray-300 px-4 py-2">Покупка</th>
-              <th className="border border-gray-300 px-4 py-2">Продажа</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rates && (
-              Object.keys(rates).map((currency) => (
-                <tr key={currency} className="text-center">
-                  <td className="border border-gray-300 px-4 py-2">{currency}</td>
-                  <td className="border border-gray-300 px-4 py-2">{rates[currency].buy.toFixed(2)}</td>
-                  <td className="border border-gray-300 px-4 py-2">{rates[currency].sell.toFixed(2)}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <Card className="exchange-rates-card">
+      <Card.Body>
+        <Card.Title className="exchange-rates-title">Курс валюта</Card.Title>
+
+        {loading ? (
+          <Spinner animation="border" variant="light" />
+        ) : (
+          <Table
+            striped
+            bordered
+            hover
+            size="sm"
+            className="exchange-rates-table"
+          >
+            <thead>
+              <tr>
+                <th>Валюта</th>
+                <th>Покупка</th>
+                <th>Продажа</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rates && (
+                <>
+                  <tr>
+                    <td>USD</td>
+                    <td>{rates.USD.buy.toFixed(2)}</td>
+                    <td>{rates.USD.sell.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td>EUR</td>
+                    <td>{rates.EUR.buy.toFixed(2)}</td>
+                    <td>{rates.EUR.sell.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td>RUB</td>
+                    <td>{rates.RUB.buy.toFixed(2)}</td>
+                    <td>{rates.RUB.sell.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td>KZT</td>
+                    <td>{rates.KZT.buy.toFixed(2)}</td>
+                    <td>{rates.KZT.sell.toFixed(2)}</td>
+                  </tr>
+                </>
+              )}
+            </tbody>
+          </Table>
+        )}
+      </Card.Body>
+    </Card>
   );
 };
 

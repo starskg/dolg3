@@ -7,11 +7,11 @@ const TopLinks = () => {
   return (
     <Container className="top-links-container my-3">
       <div className="top-links d-flex justify-content-around flex-wrap">
-        <Link to="/dashboard" className="top-link">Dashboard</Link>
-        <Link to="/about" className="top-link">Информация</Link>
-        <Link to="/profile" className="top-link">Профиль</Link>
-        <Link to="/settings" className="top-link">Настройки</Link>
-        <Link to="/help" className="top-link">Помощь</Link>
+        <Link to="/pricelist" className="top-link text-primary">Создать прайс-лист</Link>
+        <Link to="/about" className="top-link">функция2</Link>
+        <Link to="/profile" className="top-link">функция3</Link>
+       {/*  <Link to="/settings" className="top-link">функция4</Link>
+        <Link to="/help" className="top-link">функция5</Link> */}
       </div>
     </Container>
   );
